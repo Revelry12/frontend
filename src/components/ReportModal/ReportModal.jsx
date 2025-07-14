@@ -1,4 +1,4 @@
-import { FaTimes, FaCheck, FaMapMarkerAlt, FaLock, FaUsers, FaLocationArrow } from 'react-icons/fa';
+import { FaTimes, FaCheck, FaMapMarkerAlt, FaLock, FaAddressCard, FaLocationArrow } from 'react-icons/fa';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -232,14 +232,14 @@ const ReportModal = ({ isOpen, onClose }) => {
             <div className="bg-green-50 rounded-lg sm:rounded-xl p-4 sm:p-6 border border-green-100 hover:shadow-md transition-shadow">
               <div className="flex items-center space-x-3 mb-3 sm:mb-4">
                 <div className="bg-green-500 p-2 rounded-lg">
-                  <FaUsers className="text-white text-sm sm:text-lg" />
+                  <FaAddressCard className="text-white text-sm sm:text-lg" />
                 </div>
                 <h3 className="font-bold text-slate-800 text-base sm:text-lg">
-                  Laporan Publik
+                  Tanggung Jawab
                 </h3>
               </div>
               <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
-                Ubah jenis laporan menjadi <strong>Publik</strong> pada halaman <strong>Tinjau Laporan</strong> jika Anda ingin laporan terlihat oleh pengguna Lapor-in lainnya.
+                Segala jenis laporan akan diteruskan ke instansi terkait, Diharapkan mengisi laporan dengan penuh tanggung jawab.
               </p>
             </div>
           </div>

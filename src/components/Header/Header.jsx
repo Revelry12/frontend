@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { FaUser, FaBars, FaTimes } from 'react-icons/fa';
+import { FaUser, FaBars, FaTimes, FaCog } from 'react-icons/fa'; // Tambahkan FaCog
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 
 const Header = ({ onOpenLogin }) => {
-  const { user, isAuthenticated, logout } = useUser();
+  const { user, isAuthenticated, isAdmin, logout } = useUser(); // Tambahkan isAdmin
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -30,6 +30,22 @@ const Header = ({ onOpenLogin }) => {
 
   const handleLogoClick = () => {
     navigate('/');
+    setIsMobileMenuOpen(false);
+  };
+
+  // Tambahkan fungsi untuk navigasi ke MyReports
+  const handleMyReportsClick = () => {
+    if (isAuthenticated) {
+      navigate('/my-reports');
+    } else {
+      onOpenLogin(); // Jika belum login, buka modal login
+    }
+    setIsMobileMenuOpen(false);
+  };
+
+  // Tambahkan fungsi untuk navigasi ke Admin Dashboard
+  const handleAdminDashboardClick = () => {
+    navigate('/admin');
     setIsMobileMenuOpen(false);
   };
 
@@ -59,6 +75,7 @@ const Header = ({ onOpenLogin }) => {
         </button>
         <button
           type="button"
+          onClick={handleMyReportsClick}
           className="text-white font-semibold rounded-md px-4 py-2 
           hover:bg-gray-700 hover:text-white transition-all duration-150"
         >
@@ -72,10 +89,24 @@ const Header = ({ onOpenLogin }) => {
           Peta
         </button>
         
+        {/* Admin Dashboard Button - hanya tampil untuk admin */}
+        {isAuthenticated && isAdmin() && (
+          <button
+            type="button"
+            onClick={handleAdminDashboardClick}
+            className="bg-red-600 text-white font-semibold rounded-md px-4 py-2 
+            hover:bg-red-700 transition-all duration-150 flex items-center space-x-2"
+            title="Admin Dashboard"
+          >
+            <FaCog className="text-sm" />
+            <span>Dashboard</span>
+          </button>
+        )}
+        
         {/* Tampilkan nama user jika sudah login */}
         {isAuthenticated && user && (
           <span className="text-white font-medium">
-            Halo, {user.name}
+            Halo, {user.name} {isAdmin() && <span className="text-yellow-300">(Admin)</span>}
           </span>
         )}
         
@@ -135,6 +166,7 @@ const Header = ({ onOpenLogin }) => {
           </button>
           <button
             type="button"
+            onClick={handleMyReportsClick}
             className="text-white font-semibold rounded-md px-4 py-3 
             hover:bg-white/10 transition-all duration-300 text-left transform hover:translate-x-2"
           >
@@ -148,11 +180,24 @@ const Header = ({ onOpenLogin }) => {
             Peta
           </button>
           
+          {/* Admin Dashboard Button untuk mobile */}
+          {isAuthenticated && isAdmin() && (
+            <button
+              type="button"
+              onClick={handleAdminDashboardClick}
+              className="bg-red-600 text-white font-semibold rounded-md px-4 py-3 
+              hover:bg-red-700 transition-all duration-300 text-left transform hover:translate-x-2 flex items-center space-x-2"
+            >
+              <FaCog className="text-sm" />
+              <span>Admin Dashboard</span>
+            </button>
+          )}
+          
           {/* User info dan login button untuk mobile */}
           <div className="border-t border-white/20 pt-3 mt-3">
             {isAuthenticated && user && (
               <div className="text-white font-medium px-4 py-2">
-                Halo, {user.name}
+                Halo, {user.name} {isAdmin() && <span className="text-yellow-300">(Admin)</span>}
               </div>
             )}
             

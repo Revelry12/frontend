@@ -45,7 +45,7 @@ export const UserProvider = ({ children }) => {
     setIsAuthenticated(false);
     localStorage.removeItem('user');
     localStorage.removeItem('isAuthenticated');
-    localStorage.removeItem('token');
+    localStorage.removeItem('authToken'); // Ubah dari 'token' ke 'authToken'
   };
 
   // Fungsi untuk update user profile
@@ -53,6 +53,11 @@ export const UserProvider = ({ children }) => {
     const updatedUser = { ...user, ...updatedData };
     setUser(updatedUser);
     localStorage.setItem('user', JSON.stringify(updatedUser));
+  };
+
+  // Fungsi untuk cek apakah user adalah admin
+  const isAdmin = () => {
+    return user && user.role === 'admin';
   };
 
   // Cek authentication status saat app dimuat
@@ -81,6 +86,7 @@ export const UserProvider = ({ children }) => {
     user,
     isLoading,
     isAuthenticated,
+    isAdmin, // Tambahkan fungsi isAdmin
     login,
     logout,
     updateUser

@@ -4,15 +4,36 @@ import ReviewIllustrationUrl from '../../assets/people.svg';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, A11y } from'swiper/modules';
 
+// PP member
+import nabilAvatar from '../../assets/nabil.jpg';
+import dedesAvatar from '../../assets/dedes.jpg';
+import ahmadAvatar from '../../assets/ahmad.jpg';
+import raffyAvatar from '../../assets/raffy.jpg';
+import alberthusAvatar from '../../assets/alberthus.jpg';
+import regikAvatar from '../../assets/regik.jpg';
+import adilAvatar from '../../assets/adil.jpg';
+
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
-const TestimonialAvatarPlaceholder = () => (
-  <div className="w-20 h-20 sm:w-24 sm:h-24 bg-blue-100 rounded-full flex-shrink-0 flex items-center justify-center shadow-sm mr-0 mb-4 sm:mr-6 sm:mb-0">
-    <span className="text-blue-400 text-xs sm:text-sm">&lt;&lt;img&gt;&gt;</span>
-  </div>
-);
+const TestimonialAvatarPlaceholder = ({ avatar, name }) => {
+  if (avatar) {
+    return (
+      <img 
+        src={avatar} 
+        alt={`Avatar ${name}`}
+        className="w-20 h-20 sm:w-24 sm:h-24 rounded-full flex-shrink-0 object-cover shadow-sm mr-0 mb-4 sm:mr-6 sm:mb-0"
+      />
+    );
+  }
+  
+  return (
+    <div className="w-20 h-20 sm:w-24 sm:h-24 bg-blue-100 rounded-full flex-shrink-0 flex items-center justify-center shadow-sm mr-0 mb-4 sm:mr-6 sm:mb-0">
+      <span className="text-blue-400 text-xs sm:text-sm">&lt;&lt;img&gt;&gt;</span>
+    </div>
+  );
+};
 
 const TestimonialsSection = () => {
   const testimonials = [
@@ -20,43 +41,44 @@ const TestimonialsSection = () => {
       id: 1,
       quote: "Layanan Lapor-in sangat membantu kami dalam menyampaikan aspirasi dan masalah di lingkungan. Responsnya cepat dan transparan",
       name: "Nabil Al Athaaf",
-      avatar: null,
+      avatar: nabilAvatar,
     },
     {
       id: 2,
       quote: "Awalnya ragu, tapi setelah mencoba melaporkan drainase tersumbat, ternyata prosesnya mudah dan ada tindak lanjut. Terima kasih Lapor-in!",
       name: "Desnita Pujiawati",
-      avatar: null,
+      avatar: dedesAvatar,
     },
     {
       id: 3,
       quote: "Platform yang inovatif untuk kemajuan Kota Batam. Saya berharap semakin banyak warga yang menggunakan fasilitas ini",
       name: "Ahmad Gymnastiar",
-      avatar: null,
+      avatar: ahmadAvatar,
     },
     {
       id: 4,
       quote: "Sangat berguna untuk menyampaikan keluhan terkait fasilitas publik. Prosesnya juga tidak ribet.",
       name: "Nur Ramadhani Syaputra",
-      avatar: null,
+      avatar: adilAvatar,
     },
     {
       id: 5,
       quote: "Dengan Lapor-in, suara kita sebagai warga benar-benar didengar. Masalah sampah liar di komplek kami jadi lebih cepat ditangani.",
       name: "Raffy Leksono",
-      avatar: null,
+      avatar: raffyAvatar,
     },
     {
       id: 6,
       quote: "Sebagai pemerhati kota, saya melihat Lapor-in sebagai langkah maju dalam partisipasi publik dan tata kelola kota yang baik.",
       name: "Alberthus Dennis",
-      avatar: null,
+      avatar: alberthusAvatar,
     },
     {
       id: 7,
-      quote: "Tes",
+      quote: "Dengan adanya Lapor-in masalah umum yang sering dijumpai jadi semakin cepat ditanggapi sehingga kegiatan masyrakat dapat berjalan kondusif dengan cepat",
       name : "Regi Mayangsari",
-      avatar: null,
+      avatar: regikAvatar,
+
     },
   ];
   const enableLoop = testimonials.length > 1;
@@ -94,7 +116,7 @@ const TestimonialsSection = () => {
                 {testimonials.map((testimonial) => (
                   <SwiperSlide key={testimonial.id}>
                     <div className="bg-white/80 backdrop-blur-sm p-8 sm:p-8 rounded-xl shadow-sm border border-blue-100/50 hover:shadow-md hover:border-blue-200/60 transition-all duration-300 flex flex-col items-center text-center min-h-[280px] sm:min-h-[250px] justify-center box-border">
-                      <TestimonialAvatarPlaceholder />
+                      <TestimonialAvatarPlaceholder avatar={testimonial.avatar} name={testimonial.name} />
                       <p className="text-slate-600 italic mb-4 leading-relaxed text-sm sm:text-base max-w-md mx-auto">
                         "{testimonial.quote}"
                       </p>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaEye, FaCalendar, FaMapMarkerAlt } from 'react-icons/fa';
+import ImageDisplay from '../ImageDisplay/ImageDisplay';
 
 const MyReports = () => {
   const [reports, setReports] = useState([]);
@@ -71,8 +72,8 @@ const MyReports = () => {
           <div key={report._id} className="bg-white rounded-lg shadow-sm border p-6">
             <div className="flex justify-between items-start mb-4">
               <div>
-                <h3 className="text-lg font-semibold">{report.title}</h3>
-                <p className="text-gray-600 text-sm">{report.category}</p>
+                <h3 className="text-lg font-semibold">{report.category}</h3>
+                <p className="text-gray-600 text-sm">Laporan {report.category}</p>
               </div>
               <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(report.status)}`}>
                 {report.status}
@@ -106,7 +107,7 @@ const MyReports = () => {
           <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex justify-between items-start mb-4">
-                <h2 className="text-xl font-bold">{selectedReport.title}</h2>
+                <h2 className="text-xl font-bold">Detail Laporan - {selectedReport.category}</h2>
                 <button
                   onClick={() => setSelectedReport(null)}
                   className="text-gray-500 hover:text-gray-700"
@@ -131,9 +132,10 @@ const MyReports = () => {
                   <h3 className="font-semibold mb-2">Gambar</h3>
                   <div className="grid grid-cols-2 gap-2">
                     {selectedReport.images.map((image, index) => (
-                      <img
+                      <ImageDisplay
                         key={index}
-                        src={image.data}
+                        reportId={selectedReport._id}
+                        imageIndex={index}
                         alt={`Report image ${index + 1}`}
                         className="w-full h-32 object-cover rounded border"
                       />

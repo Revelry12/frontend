@@ -51,14 +51,8 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister, onSwitchToForgotPassw
   // Di dalam komponen LoginModal
   const { login } = useUser();
   
-  // Update handleSubmit function
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
-
     setIsLoading(true);
     setMessage('');
   
@@ -76,21 +70,27 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister, onSwitchToForgotPassw
       if (data.success) {
         setMessage('Login berhasil!');
         
-        // Use the UserContext login function instead of manual localStorage
+        // Pastikan data user lengkap dengan role
+        console.log('User data:', data.user); // Debug: cek apakah role ada
+        
+        // Use the UserContext login function
         const loginResult = await login(data.user);
         
         if (loginResult.success) {
-          // Store token separately (UserContext handles user data)
-          localStorage.setItem('token', data.token);
-          
-          // Reset form
-          setFormData({ email: '', password: '' });
-          
-          // Close modal without page reload
-          setTimeout(() => {
-            onClose();
-          }, 1500);
+          // Store token dengan key yang konsisten
+          localStorage.setItem('authToken', data.token); // Ubah dari 'token' ke 'authToken'
+          login(data.user);
+          onClose();
+          navigate('/create-report');
         }
+        
+        // Reset form
+        setFormData({ email: '', password: '' });
+        
+        // Close modal
+        setTimeout(() => {
+          onClose();
+        }, 1500);
       } else {
         setMessage(data.message || 'Terjadi kesalahan saat login');
       }
